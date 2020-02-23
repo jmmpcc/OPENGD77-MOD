@@ -43,11 +43,6 @@ int menuTxScreen(uiEvent_t *ev, bool isFirstRun)
 		settingsPrivateCallMuteMode = false;
 		isShowingLastHeard = false;
 
-		if (nonVolatileSettings.txTone == true)
-		{
-			set_melody(melody_TXtone_beep);
-		}
-
 		if ((currentChannelData->flag4 & 0x04) == 0x00 && (trxCheckFrequencyInAmateurBand(currentChannelData->txFreq) || nonVolatileSettings.txFreqLimited == false))
 		{
 			nextSecondPIT = PITCounter + PIT_COUNTS_PER_SECOND;
@@ -197,11 +192,11 @@ static void handleEvent(uiEvent_t *ev)
 				// In analog mode. Stop transmitting immediately
 
 			    GPIO_PinWrite(GPIO_LEDred, Pin_LEDred, 0);
-			    if (nonVolatileSettings.txTone == true)
+			    
+				if (nonVolatileSettings.txTone == true)
 			    {
-
-			    				set_melody(melody_ACK_beep);
-			    				}
+				set_melody(melody_TXtone_beep);
+			    }
 
 
 
@@ -229,10 +224,8 @@ static void handleEvent(uiEvent_t *ev)
 			{
 
 				GPIO_PinWrite(GPIO_LEDred, Pin_LEDred, 0);
-
 				if (nonVolatileSettings.txTone == true){
-
-				set_melody(melody_ACK_beep);
+				set_melody(melody_TXtone_beep);
 				}
 
 
