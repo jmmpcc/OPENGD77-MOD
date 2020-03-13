@@ -320,9 +320,9 @@ static void handleEvent(uiEvent_t *ev)
 				break;
 			case CH_DETAILS_FREQ_STEP:
 				tmpVal = (tmpChannel.VFOflag5>>4)+1;
-				if (tmpVal>9)
+				if (tmpVal>7)
 				{
-					tmpVal=9;
+					tmpVal=7;
 				}
 				tmpChannel.VFOflag5 &= 0x0F;
 				tmpChannel.VFOflag5 |= tmpVal<<4;

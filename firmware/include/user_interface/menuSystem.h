@@ -40,7 +40,6 @@ extern int menuDisplayLightTimer;
 extern int uiPrivateCallState;
 extern int uiPrivateCallLastID;
 
-
 typedef int (*menuFunctionPointer_t)(uiEvent_t *, bool); // Typedef for menu function pointers.  Functions are passed the key, the button and the event data. Event can be a Key or a button or both. Last arg is for when the function is only called to initialise and display its screen.
 typedef struct menuControlDataStruct
 {
@@ -124,6 +123,7 @@ enum MENU_SCREENS { MENU_SPLASH_SCREEN=0,
 					MENU_LAST_HEARD,
 					MENU_OPTIONS,
 					MENU_DISPLAY,
+					MENU_SOUND,
 					MENU_CREDITS,
 					MENU_CHANNEL_DETAILS,
 					MENU_HOTSPOT_MODE,
@@ -181,6 +181,7 @@ int menuRSSIScreen(uiEvent_t *event, bool isFirstRun);
 int menuLastHeard(uiEvent_t *event, bool isFirstRun);
 int menuOptions(uiEvent_t *event, bool isFirstRun);
 int menuDisplayOptions(uiEvent_t *event, bool isFirstRun);
+int menuSoundOptions(uiEvent_t *event, bool isFirstRun);
 int menuCredits(uiEvent_t *event, bool isFirstRun);
 int menuChannelDetails(uiEvent_t *event, bool isFirstRun);
 int menuHotspotMode(uiEvent_t *event, bool isFirstRun);

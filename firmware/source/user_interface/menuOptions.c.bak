@@ -34,7 +34,7 @@ enum OPTIONS_MENU_LIST { OPTIONS_MENU_TIMEOUT_BEEP=0,OPTIONS_MENU_FACTORY_RESET,
 							OPTIONS_MENU_SCAN_DELAY,OPTIONS_MENU_SCAN_MODE,
 							OPTIONS_MENU_SQUELCH_DEFAULT_VHF,OPTIONS_MENU_SQUELCH_DEFAULT_220MHz,OPTIONS_MENU_SQUELCH_DEFAULT_UHF,
 							OPTIONS_MENU_PTT_TOGGLE, OPTIONS_MENU_HOTSPOT_TYPE, OPTIONS_MENU_TALKER_ALIAS_TX,
-							OPTIONS_MENU_PRIVATE_CALLS,DISPLAY_MENU_END_TICK,
+							OPTIONS_MENU_PRIVATE_CALLS,DISPLAY_MENU_END_TICK,OPTIONS_MENU_TXTONE,
 							NUM_OPTIONS_MENU_ITEMS};
 
 int menuOptions(uiEvent_t *ev, bool isFirstRun)
@@ -164,6 +164,10 @@ static void updateScreen(void)
 			case DISPLAY_MENU_END_TICK: // 20-02-2020 Evita corte temprano RX
 							snprintf(buf, bufferLen, "%s:%d", currentLanguage->endtick , nonVolatileSettings.endTickTimeOut);
 							break;
+			case OPTIONS_MENU_TXTONE:
+				snprintf(buf, bufferLen, "%s:%s", currentLanguage->txtone, (nonVolatileSettings.txTone ? currentLanguage->on : currentLanguage->off));
+				break;
+
 
 
 		}
@@ -299,7 +303,9 @@ static void handleEvent(uiEvent_t *ev)
 
 					break;
 
-
+case OPTIONS_MENU_TXTONE:
+				nonVolatileSettings.txTone = true;
+				break;
 		}
 	}
 	else if (KEYCHECK_PRESS(ev->keys,KEY_LEFT))
@@ -407,7 +413,7 @@ static void handleEvent(uiEvent_t *ev)
 									nonVolatileSettings.endTickTimeOut--;
 								}
 
-								if (nonVolatileSettings.endTickTimeOut < 0)
+								if (nonVolatileSettings.endTickTimeOut < 3)
 								{
 
 									nonVolatileSettings.endTickTimeOut= 20;
@@ -416,6 +422,9 @@ static void handleEvent(uiEvent_t *ev)
 
 								break;
 
+case OPTIONS_MENU_TXTONE:
+				nonVolatileSettings.txTone = false;
+				break;
 
 		}
 	}

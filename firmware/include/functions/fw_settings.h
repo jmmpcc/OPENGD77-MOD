@@ -33,6 +33,9 @@ enum CONTACT_DISPLAY_PRIO { CONTACT_DISPLAY_PRIO_CC_DB_TA = 0, CONTACT_DISPLAY_P
 enum SCAN_MODE { SCAN_MODE_HOLD = 0, SCAN_MODE_PAUSE, SCAN_MODE_STOP };
 enum SPLIT_CONTACT { SPLIT_CONTACT_SINGLE_LINE_ONLY = 0, SPLIT_CONTACT_ON_TWO_LINES, SPLIT_CONTACT_AUTO };
 
+extern const uint8_t BEEP_TX_NONE;
+extern const uint8_t BEEP_TX_START;
+extern const uint8_t BEEP_TX_STOP;
 
 extern int settingsCurrentChannelNumber;
 extern bool settingsPrivateCallMuteMode;
@@ -68,6 +71,7 @@ typedef struct settingsStruct
 	uint8_t			currentVFONumber;
 	uint8_t			dmrFilterLevel;
 	uint8_t			dmrCaptureTimeout;
+	uint8_t			analogFilterLevel;
 	uint8_t			languageIndex;
 	uint8_t			scanDelay;
 	uint8_t			squelchDefaults[RADIO_BANDS_TOTAL_NUM];// VHF,200Mhz and UHF
@@ -81,11 +85,13 @@ typedef struct settingsStruct
 	uint8_t			contactDisplayPriority;
 	uint8_t			splitContact;
 	int8_t			endTickTimeOut;				// END_TICK_TIME_OUT Mejora cortes recepcion
+uint8_t			beepOptions;
 
 } settingsStruct_t;
 
-typedef enum DMR_FILTER_TYPE {DMR_FILTER_NONE = 0, DMR_FILTER_TS, DMR_FILTER_TS_TG, DMR_FILTER_TS_DC ,
+typedef enum DMR_FILTER_TYPE {DMR_FILTER_NONE = 0, DMR_FILTER_CC, DMR_FILTER_CC_TS, DMR_FILTER_CC_TS_TG, DMR_FILTER_CC_TS_DC ,
 								NUM_DMR_FILTER_LEVELS} dmrFilter_t;
+typedef enum ANALOG_FILTER_TYPE {ANALOG_FILTER_NONE = 0, ANALOG_FILTER_CTCSS, NUM_ANALOG_FILTER_LEVELS} analogFilter_t;
 
 extern settingsStruct_t nonVolatileSettings;
 extern struct_codeplugChannel_t *currentChannelData;

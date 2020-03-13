@@ -27,7 +27,13 @@
 
 static const int STORAGE_BASE_ADDRESS 		= 0x6000;
 
-static const int STORAGE_MAGIC_NUMBER 		= 0x4742;
+static const int STORAGE_MAGIC_NUMBER 		= 0x4745;
+
+// Bit patterns for DMR Beep
+const uint8_t BEEP_TX_NONE  = 0x00;
+const uint8_t BEEP_TX_START = 0x01;
+const uint8_t BEEP_TX_STOP  = 0x02;
+
 
 
 settingsStruct_t nonVolatileSettings;
@@ -64,6 +70,11 @@ bool settingsLoadSettings(void)
 	settingsInitVFOChannel(1);
 
 	trxDMRID = codeplugGetUserDMRID();
+
+	if (nonVolatileSettings.analogFilterLevel == ANALOG_FILTER_NONE)
+	{
+		trxSetRxCTCSS(TRX_CTCSS_TONE_NONE);
+	}
 
 	currentLanguage = &languages[nonVolatileSettings.languageIndex];
 
@@ -150,8 +161,9 @@ void settingsRestoreDefaultSettings(void)
 	nonVolatileSettings.keypadTimerLong = 5;
 	nonVolatileSettings.keypadTimerRepeat = 3;
 	nonVolatileSettings.currentVFONumber = 0;
-	nonVolatileSettings.dmrFilterLevel = DMR_FILTER_TS;
+	nonVolatileSettings.dmrFilterLevel = DMR_FILTER_CC_TS;
 	nonVolatileSettings.dmrCaptureTimeout=10;// Default to holding 10 seconds after a call ends
+	nonVolatileSettings.analogFilterLevel = ANALOG_FILTER_CTCSS;
 	nonVolatileSettings.languageIndex=0;
 	nonVolatileSettings.scanDelay=5;// 5 seconds
 	nonVolatileSettings.scanModePause = SCAN_MODE_HOLD;
@@ -162,13 +174,14 @@ void settingsRestoreDefaultSettings(void)
 	nonVolatileSettings.hotspotType = HOTSPOT_TYPE_OFF;
 	nonVolatileSettings.transmitTalkerAlias	= false;
     nonVolatileSettings.privateCalls = true;
-    nonVolatileSettings.txTone = true;
-	nonVolatileSettings.vfoAScanLow=14400000;						//Low frequency limit for VFO A Scanning
-	nonVolatileSettings.vfoAScanHigh=14600000;						//High Frequency limit for VFO A Scanning
-	nonVolatileSettings.vfoBScanLow=43000000;						//Low frequency limit for VFO B Scanning
-	nonVolatileSettings.vfoBScanHigh=44000000;						//High Frequency limit for VFO B Scanning
+    // Set all these value to zero to force the operator to set their own limits.
+	nonVolatileSettings.vfoAScanLow=0;	//Low frequency limit for VFO A Scanning
+	nonVolatileSettings.vfoAScanHigh=0;	//High Frequency limit for VFO A Scanning
+	nonVolatileSettings.vfoBScanLow=0;	//Low frequency limit for VFO B Scanning
+	nonVolatileSettings.vfoBScanHigh=0;	//High Frequency limit for VFO B Scanning
 	nonVolatileSettings.contactDisplayPriority = CONTACT_DISPLAY_PRIO_CC_DB_TA;
 	nonVolatileSettings.splitContact = SPLIT_CONTACT_SINGLE_LINE_ONLY;
+	nonVolatileSettings.beepOptions = BEEP_TX_START;
 	nonVolatileSettings.endTickTimeOut=13;
 
 	currentChannelData = &settingsVFOChannel[nonVolatileSettings.currentVFONumber];// Set the current channel data to point to the VFO data since the default screen will be the VFO

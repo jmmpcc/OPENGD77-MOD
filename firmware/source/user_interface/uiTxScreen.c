@@ -38,7 +38,7 @@ int menuTxScreen(uiEvent_t *ev, bool isFirstRun)
 
 	if (isFirstRun)
 	{
-		uiChannelModeScanActive = false;
+		scanActive = false;
 		trxIsTransmittingTone = false;
 		settingsPrivateCallMuteMode = false;
 		isShowingLastHeard = false;
@@ -129,6 +129,12 @@ int menuTxScreen(uiEvent_t *ev, bool isFirstRun)
 			{
 				if (trxGetMode() == RADIO_MODE_DIGITAL)
 				{
+					if ((nonVolatileSettings.beepOptions & BEEP_TX_START) &&
+							(slot_state == DMR_STATE_TX_START_1) && (melody_play == NULL))
+					{
+						set_melody(melody_dmr_tx_start_beep);
+					}
+
 					if ((ev->time - micm) > 100)
 					{
 						drawDMRMicLevelBarGraph();
@@ -222,14 +228,15 @@ static void handleEvent(uiEvent_t *ev)
 			// In DMR mode, wait for the DMR system to finish before exiting
 			if (slot_state < DMR_STATE_TX_START_1)
 			{
+				if ((nonVolatileSettings.beepOptions & BEEP_TX_STOP) && (melody_play == NULL))
+				{
+					set_melody(melody_dmr_tx_stop_beep);
+				}
 
 				GPIO_PinWrite(GPIO_LEDred, Pin_LEDred, 0);
 				if (nonVolatileSettings.txTone == true){
 				set_melody(melody_TXtone_beep);
 				}
-
-
-
 				menuSystemPopPreviousMenu();
 			}
 		}

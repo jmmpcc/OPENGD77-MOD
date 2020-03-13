@@ -140,7 +140,7 @@ typedef struct stringsTable
    const char *new_channel;
    const char *priority_order;
    const char *endtick;
-
+   const char *txtone;
 } stringsTable_t;
 
 extern const stringsTable_t languages[];

@@ -43,6 +43,7 @@ extern const int melody_sk1_beep[];
 extern const int melody_sk2_beep[];
 extern const int melody_orange_beep[];
 extern const int melody_TXtone_beep[];
+extern const int melody_RXtone_beep[];
 extern const int melody_ACK_beep[];
 extern const int melody_NACK_beep[];
 extern const int melody_ERROR_beep[];

@@ -38,6 +38,7 @@ int trxCurrentBand[2] = {RADIO_BAND_VHF,RADIO_BAND_VHF};// Rx and Tx band.
 const frequencyBand_t RADIO_FREQUENCY_BANDS[RADIO_BANDS_TOTAL_NUM] =  {
 													{
 														.minFreq=13400000,
+
 														.maxFreq=17400000
 													},// VHF
 													{
@@ -75,8 +76,6 @@ static int currentTxFrequency = 14400000;
 static int currentCC = 1;
 static uint8_t squelch = 0x00;
 static bool rxCTCSSactive = false;
-static uint8_t ANTENNA_SWITCH_RX = 0;
-static uint8_t ANTENNA_SWITCH_TX = 1;
 
 // AT-1846 native values for Rx
 static uint8_t rx_fl_l;
@@ -194,10 +193,7 @@ int trx_carrier_detected(void)
 {
 	uint8_t squelch;
 
-	// The task Critical wrapper may not be necessary and is only added as a precaution
-	taskENTER_CRITICAL();
 	trxReadRSSIAndNoise();
-	taskEXIT_CRITICAL();
 
 	// check for variable squelch control
 	if (currentChannelData->sql!=0)
@@ -218,6 +214,33 @@ int trx_carrier_detected(void)
 		return 0;
 	}
 
+}
+
+void trxCheckDigitalSquelch(void)
+{
+	trx_measure_count++;
+	if (trx_measure_count==25)
+	{
+		uint8_t squelch;
+
+		trxReadRSSIAndNoise();
+
+
+		// Don't check for variable squelch, as some people seem to have this set to fully open on their DMR channels.
+		/*
+		if (currentChannelData->sql!=0)
+		{
+			squelch =  TRX_SQUELCH_MAX - (((currentChannelData->sql-1)*11)>>2);
+		}
+		else*/
+		{
+			squelch =  TRX_SQUELCH_MAX - (((nonVolatileSettings.squelchDefaults[trxCurrentBand[TRX_RX_FREQ_BAND]])*11)>>2);
+		}
+
+		GPIO_PinWrite(GPIO_LEDgreen, Pin_LEDgreen, (trxRxNoise < squelch));
+
+		trx_measure_count=0;
+	}
 }
 
 void trx_check_analog_squelch(void)
@@ -431,7 +454,6 @@ void trxActivateRx(void)
 	GPIO_PinWrite(GPIO_VHF_TX_amp_power, Pin_VHF_TX_amp_power, 0);// VHF PA off
 	GPIO_PinWrite(GPIO_UHF_TX_amp_power, Pin_UHF_TX_amp_power, 0);// UHF PA off
 
-    GPIO_PinWrite(GPIO_RF_ant_switch, Pin_RF_ant_switch, ANTENNA_SWITCH_RX);
 	txPAEnabled=false;
 
 
@@ -484,8 +506,6 @@ void trxActivateTx(void)
 	{
 		set_clear_I2C_reg_2byte_with_mask(0x30, 0xFF, 0x1F, 0x00, 0xC0); // digital TX
 	}
-
-    GPIO_PinWrite(GPIO_RF_ant_switch, Pin_RF_ant_switch, ANTENNA_SWITCH_TX);
 
 	// TX PA on
 	if (trxCurrentBand[TRX_TX_FREQ_BAND] == RADIO_BAND_UHF)

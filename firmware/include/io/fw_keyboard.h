@@ -21,6 +21,8 @@
 
 #include "fw_common.h"
 
+#if(PLATFORM == GD-77)
+
 // column lines
 #define Port_Key_Col0   PORTC
 #define GPIO_Key_Col0 	GPIOC
@@ -52,6 +54,44 @@
 #define GPIO_Key_Row4 	GPIOB
 #define Pin_Key_Row4	23
 
+#elif (PLATFORM == DM-1801)
+
+// column lines
+#define Port_Key_Col0   PORTC
+#define GPIO_Key_Col0 	GPIOC
+#define Pin_Key_Col0	0
+#define Port_Key_Col1   PORTC
+#define GPIO_Key_Col1 	GPIOC
+#define Pin_Key_Col1 	1
+#define Port_Key_Col2   PORTC
+#define GPIO_Key_Col2 	GPIOC
+#define Pin_Key_Col2 	2
+#define Port_Key_Col3   PORTC
+#define GPIO_Key_Col3 	GPIOC
+#define Pin_Key_Col3 	3
+
+// row lines
+#define Port_Key_Row0   PORTB
+#define GPIO_Key_Row0 	GPIOB
+#define Pin_Key_Row0	19
+#define Port_Key_Row1   PORTB
+#define GPIO_Key_Row1 	GPIOB
+#define Pin_Key_Row1	20
+#define Port_Key_Row2   PORTB
+#define GPIO_Key_Row2 	GPIOB
+#define Pin_Key_Row2	21
+#define Port_Key_Row3   PORTB
+#define GPIO_Key_Row3 	GPIOB
+#define Pin_Key_Row3	22
+#define Port_Key_Row4   PORTB
+#define GPIO_Key_Row4 	GPIOB
+#define Pin_Key_Row4	23
+
+#endif
+
+
+
+
 #define SCAN_UP     0x00000100
 #define SCAN_DOWN   0x00002000
 #define SCAN_LEFT   0x00000200
@@ -71,26 +111,32 @@
 #define SCAN_STAR   0x00008000
 #define SCAN_HASH   0x00020000
 
-#define KEY_GREENSTAR  '+'    // GREEN + STAR
+#define KEY_GREENSTAR   '+'    // GREEN + STAR
 
-#define KEY_UP    1
-#define KEY_DOWN  2
-#define KEY_LEFT  3
-#define KEY_RIGHT 4
-#define KEY_GREEN 13
-#define KEY_RED   27
-#define KEY_0     '0'
-#define KEY_1     '1'
-#define KEY_2     '2'
-#define KEY_3     '3'
-#define KEY_4     '4'
-#define KEY_5     '5'
-#define KEY_6     '6'
-#define KEY_7     '7'
-#define KEY_8     '8'
-#define KEY_9     '9'
-#define KEY_STAR  '*'
-#define KEY_HASH  '#'
+#define KEY_UP           1
+#define KEY_DOWN         2
+#define KEY_LEFT         3
+#define KEY_RIGHT        4
+
+#if (PLATFORM == DM-1801)
+#define KEY_VFO_MR       5
+#define KEY_A_B          6
+#endif
+
+#define KEY_GREEN       13
+#define KEY_RED         27
+#define KEY_0           '0'
+#define KEY_1           '1'
+#define KEY_2           '2'
+#define KEY_3           '3'
+#define KEY_4           '4'
+#define KEY_5           '5'
+#define KEY_6           '6'
+#define KEY_7           '7'
+#define KEY_8           '8'
+#define KEY_9           '9'
+#define KEY_STAR        '*'
+#define KEY_HASH        '#'
 
 
 #define KEY_MOD_DOWN    0x01

@@ -33,8 +33,6 @@ static const int BACKLIGHT_MAX_PERCENTAGE = 100;
 static const int BACKLIGHT_PERCENTAGE_STEP = 10;
 static const int BACKLIGHT_PERCENTAGE_STEP_SMALL = 1;
 
-
-
 static const char *contactOrders[] = { "Ct/DB/TA", "DB/Ct/TA", "TA/Ct/DB", "TA/DB/Ct" };
 
 enum DISPLAY_MENU_LIST { 	DISPLAY_MENU_BRIGHTNESS = 0, DISPLAY_MENU_BRIGHTNESS_OFF, DISPLAY_MENU_CONTRAST, DISPLAY_MENU_BACKLIGHT_MODE, DISPLAY_MENU_TIMEOUT, DISPLAY_MENU_COLOUR_INVERT,
@@ -85,13 +83,9 @@ static void updateScreen(void)
 			case DISPLAY_MENU_CONTRAST:
 				snprintf(buf, bufferLen, "%s:%d", currentLanguage->contrast, nonVolatileSettings.displayContrast);
 				break;
-
-
-
 			case DISPLAY_MENU_BACKLIGHT_MODE:
 				snprintf(buf, bufferLen, "%s:%s", currentLanguage->mode, backlightModes[nonVolatileSettings.backlightMode]);
 				break;
-
 			case DISPLAY_MENU_TIMEOUT:
 				if (nonVolatileSettings.backlightMode == BACKLIGHT_MODE_AUTO)
 				{
@@ -232,8 +226,6 @@ static void handleEvent(uiEvent_t *ev)
 						}
 					}
 					break;
-
-
 				case DISPLAY_MENU_CONTRAST:
 					if (nonVolatileSettings.displayContrast < CONTRAST_MAX_VALUE)
 					{
@@ -241,8 +233,6 @@ static void handleEvent(uiEvent_t *ev)
 					}
 					ucSetContrast(nonVolatileSettings.displayContrast);
 					break;
-
-
 				case DISPLAY_MENU_BACKLIGHT_MODE:
 					if (nonVolatileSettings.backlightMode < BACKLIGHT_MODE_NONE)
 					{
@@ -326,7 +316,6 @@ static void handleEvent(uiEvent_t *ev)
 						updateBacklightMode((--nonVolatileSettings.backlightMode));
 					}
 					break;
-
 				case DISPLAY_MENU_TIMEOUT:
 					if (nonVolatileSettings.backLightTimeout >= BACKLIGHT_TIMEOUT_STEP)
 					{

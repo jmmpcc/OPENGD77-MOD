@@ -17,10 +17,10 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 /*
- * Translators: EA3IGM, EA5SW
+ * Translators: EA3IGM, EA5SW, EB3AM, EA3BIL
  *
  *
- * Rev: 3
+ * Rev: 4
  */
 #ifndef USER_INTERFACE_LANGUAGES_CATALAN_H_
 #define USER_INTERFACE_LANGUAGES_CATALAN_H_
@@ -39,13 +39,14 @@ const stringsTable_t catalanLanguage=
 .menu					= "Menú",
 .credits				= "Crèdits",
 .zone					= "Zona",
-.rssi					= "RSSI",
-.battery				= "Bateria",
+.rssi					= "Senyal",
+.battery				= "Batería",
 .contacts				= "Contactes",
 .firmware_info			= "Info firmware",
 .last_heard				= "Escoltats",
 .options				= "Opcions",
-.display_options		= "Opcions display",
+.display_options		= "Opcions pantalla",
+.sound_options				= "Sound options", // MaxLen: 16
 .channel_details		= "Detalls Canal",
 .new_contact			= "Nou contacte",
 .new_channel			= "Nou canal", // MaxLen: 16, leave room for a space and four channel digits after
@@ -66,40 +67,40 @@ const stringsTable_t catalanLanguage=
 .out_of_band			= "FORA DE BANDA",
 .timeout				= "TIMEOUT",
 .tg_entry				= "Entreu TG",
-.pc_entry				= "Entreu PC",
+.pc_entry				= "Entreu ID",
 .user_dmr_id			= "ID DMR d'Usuari",
 .contact				= "Contacte",
-.accept_call			= "Acceptar PC?",
+.accept_call			= "Acceptar trucada?",
 .private_call			= "Trucada privada",
 .squelch				= "Squelch",
 .quick_menu				= "Menú Ràpid",
 .filter					= "Filtre",
-.all_channels			= "Tots Canals",
-.gotoChannel			= "Anar canal",
+.all_channels			= "Tots els Canals",
+.gotoChannel			= "Anar al canal",
 .scan					= "Scan",
-.channelToVfo			= "Canal --> VFO",
-.vfoToChannel			= "VFO --> Canal",
-.vfoToNewChannel		= "VFO --> Nou Can", // MaxLen: 16
+.channelToVfo			= "Canal -> VFO",
+.vfoToChannel			= "VFO -> Canal",
+.vfoToNewChannel		= "VFO -> Nou Canal", // MaxLen: 16
 .group					= "Grup",
 .private				= "Privada",
 .all					= "Tots",
 .type					= "Tipus",
-.timeSlot				= "Timeslot",
+.timeSlot				= "TimeSlot",
 .none					= "Cap",
 .contact_saved			= "Contacte Desat",
 .duplicate				= "Duplicat",
 .tg						= "TG",
-.pc						= "PC",
+.pc						= "ID",
 .ts						= "TS",
 .mode					= "Mode",
 .colour_code			= "Codi Color",
-.n_a					= "N/A",
+.n_a					= "N/D",
 .bandwidth				= "Ample banda",
-.stepFreq				= "Pases",
+.stepFreq				= "Salt",
 .tot					= "TOT",
-.off					= "Off",
-.zone_skip				= "Zone Skip",
-.all_skip				= "All Skip",
+.off					= "NO",
+.zone_skip				= "Saltar zona",
+.all_skip				= "Saltar tot",
 .yes					= "Sí",
 .no						= "No",
 .rx_group				= "Grup RX",
